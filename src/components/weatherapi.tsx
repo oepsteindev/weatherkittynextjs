@@ -50,7 +50,7 @@ export default function WeatherByZip() {
 
       // Step 2: Fetch weather data using coordinates
       const weatherResponse = await fetch(
-        `https://api.open-meteo.com/v1/ecmwf?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m&temperature_unit=fahrenheit&timezone=auto`
+        `https://api.open-meteo.com/v1/ecmwf?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&temperature_unit=fahrenheit&timezone=auto`
       );
       if (!weatherResponse.ok) {
         throw new Error('Failed to fetch weather data');
@@ -92,13 +92,15 @@ export default function WeatherByZip() {
         <center>
           <h1>Weather Kitty Says:</h1>
           <br></br>
-          {weatherData.hourly.relative_humidity_2m[0] >= 55 ? 'Bad Hair Day!  Frizzy Kitty!' : 'Good Hair Day! Good Kitty!'}   
+          {weatherData.hourly.relative_humidity_2m[0] >= 55 ? 'Bad Hair Day!  Sorry Frizzy Kitty!' : 'Good Hair Day! Good Kitty!'}   
           <br></br>
           The humidity is  {weatherData.hourly.relative_humidity_2m[0]}!
           <br></br>
+          The dewpoint is  {weatherData.hourly.dew_point_2m[0]}!
+          <br></br>
           <br></br>
             <img
-              src={weatherData.hourly.relative_humidity_2m[0] >= 55 ? bad_hair_cat : good_hair_cat}
+              src={weatherData.hourly.dew_point_2m[0] >= 55 ? bad_hair_cat : good_hair_cat}
               alt="logo"
               height="500"
               width="500"
